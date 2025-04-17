@@ -28,20 +28,20 @@ app.listen(port, () => {
   console.log(`Server startet on port ${port}`);
 });
 
-app.get("/teams", (req, res) => {
-  const query = "SELECT * FROM teams";
-  connection.query(query, (error, team) => {
+app.get("/mannschaft", (req, res) => {
+  const query = `SELECT * FROM mannschaft`;
+  connection.query(query, (error, mannschaft) => {
     if (error) {
       res.status(500).send("interner Serverfehler");
     } else {
-      res.json(team);
+      res.json(mannschaft);
     }
   });
 });
 
 app.post("/addNewTeam", (req, res) => {
-  const teamname = req.body.teamname;
-  const query = `INSERT INTO team VALUES ("${teamname}")`;
+  const mannschaft = req.body.mannschaft;
+  const query = `INSERT INTO mannschaft VALUES ("${mannschaft}")`;
   connection.query(query, (error, results) => {
     if (error) {
       res.status(500).send("interner Serverfehler");
@@ -52,12 +52,34 @@ app.post("/addNewTeam", (req, res) => {
 });
 
 app.delete("/deleteTeam", (req, res) => {
-  const query = `DELETE FROM team WHERE id=${req.body.id}`;
+  const query = `DELETE FROM mannschaft WHERE id=${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
       res.status(500).send("interner Serverfehler");
     } else {
       res.status(201).send("Team wurde gelöscht");
+    }
+  });
+});
+
+app.get("/spieler", (req, res) => {
+  const query = "SELECT * FROM spieler";
+  connection.query(query, (error, spieler) => {
+    if (error) {
+      res.status(500).send("interner Serverfehler");
+    } else {
+      res.json(spieler);
+    }
+  });
+});
+
+app.get("/trainer", (req, res) => {
+  const query = "SELECT * FROM trainer";
+  connection.query(query, (error, trainer) => {
+    if (error) {
+      res.status(500).send("interner Serverfehler");
+    } else {
+      res.json(trainer);
     }
   });
 });
