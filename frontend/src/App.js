@@ -1,10 +1,12 @@
 import "./App.css";
 import ResponsiveAppBar from "./components/Navbar";
+import Wappen from "./components/wappen";
 
 function App() {
   return (
     <>
-      <ResponsiveAppBar /> <p>Hallo</p>
+      <Wappen />
+      <ResponsiveAppBar />
     </>
   );
 }

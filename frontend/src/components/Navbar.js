@@ -12,8 +12,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import logo from "../assets/Logo.jpg"; // Pfad relativ zur Datei
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [
+  "            ",
+  "News",
+  "Teams",
+  "Tabelle",
+  "Spielplan",
+  "Spielerstatistik",
+  "Sperren",
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -39,7 +48,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img src={logo} alt="Logo" style={{ height: 40 }} />
           <Typography
             variant="h6"
             noWrap
@@ -49,13 +58,14 @@ function ResponsiveAppBar() {
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
+              margin: 1,
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
+              letterSpacing: ".1rem",
+              color: "red",
               textDecoration: "none",
             }}
           >
-            LOGO
+            Kleinfeldliga
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
