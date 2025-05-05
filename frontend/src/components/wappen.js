@@ -23,14 +23,14 @@ function Wappen() {
         }}
       >
         <img src={ooe} alt="OÖ" style={{ height: 50, margin: 10 }} />
-        <img src={noe} alt="NÖ" style={{ height: 50, margin: 10 }} />
-        <img src={sbg} alt="SBG" style={{ height: 50, margin: 10 }} />
+        <img src={ktn} alt="KTN" style={{ height: 50, margin: 10 }} />
         <img src={w} alt="WIEN" style={{ height: 50, margin: 10 }} />
         <img src={vbg} alt="VBG" style={{ height: 50, margin: 10 }} />
         <img src={t} alt="TIROL" style={{ height: 50, margin: 10 }} />
         <img src={bgld} alt="BGLD" style={{ height: 50, margin: 10 }} />
+        <img src={noe} alt="NÖ" style={{ height: 50, margin: 10 }} />
+        <img src={sbg} alt="SBG" style={{ height: 50, margin: 10 }} />
         <img src={stmk} alt="STMK" style={{ height: 50, margin: 10 }} />
-        <img src={ktn} alt="KTN" style={{ height: 50, margin: 10 }} />
       </div>
     </>
   );
