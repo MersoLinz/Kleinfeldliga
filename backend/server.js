@@ -51,17 +51,6 @@ app.post("/addNewTeam", (req, res) => {
   });
 });
 
-app.delete("/deleteTeam", (req, res) => {
-  const query = `DELETE FROM mannschaft WHERE id=${req.body.id}`;
-  connection.query(query, (error, results) => {
-    if (error) {
-      res.status(500).send("interner Serverfehler");
-    } else {
-      res.status(201).send("Team wurde gelöscht");
-    }
-  });
-});
-
 app.get("/spieler", (req, res) => {
   const query = "SELECT * FROM spieler";
   connection.query(query, (error, spieler) => {
@@ -73,13 +62,25 @@ app.get("/spieler", (req, res) => {
   });
 });
 
-app.get("/trainer", (req, res) => {
-  const query = "SELECT * FROM trainer";
-  connection.query(query, (error, trainer) => {
-    if (error) {
-      res.status(500).send("interner Serverfehler");
-    } else {
-      res.json(trainer);
+app.post("/addNewPlayer", (req, res) => {
+  console.log("Eingehende Daten:", req.body); // 👈 HIER
+  const { vorname, nachname, geburtsjahr, email } = req.body;
+
+  if (!vorname || !nachname || !geburtsjahr || !email) {
+    return res.status(400).send("Alle Felder müssen ausgefüllt sein");
+  }
+
+  const query = `INSERT INTO spieler (vorname, nachname, geburtsjahr, email) VALUES (?, ?, ?, ?)`;
+  connection.query(
+    query,
+    [vorname, nachname, geburtsjahr, email],
+    (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Fehler beim Einfügen des Spielers");
+      } else {
+        res.status(201).send("Spieler erfolgreich registriert");
+      }
     }
-  });
+  );
 });

@@ -12,10 +12,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const RegisterPlayer = () => {
   const [player, setPlayer] = useState({
-    vname: "",
-    nname: "",
-    birthYear: null,
-    mail: "",
+    vorname: "",
+    nachname: "",
+    geburtsjahr: null,
+    email: "",
   });
 
   const handleChange = (e) => {
@@ -24,16 +24,40 @@ const RegisterPlayer = () => {
 
   const handleDateChange = (date) => {
     const year = date ? date.getFullYear() : "";
-    setPlayer({ ...player, birthYear: year });
+    setPlayer({ ...player, geburtsjahr: year });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Neuer Spieler registriert:", player);
-    alert(
-      `Spieler ${player.name}, Geburtsjahr ${player.birthYear}, wurde registriert!`
-    );
-    setPlayer({ vname: "", nname: "", birthYear: null, mail: "" });
+
+    try {
+      const response = await fetch("http://localhost:7777/addNewPlayer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          vorname: player.vorname,
+          nachname: player.nachname,
+          geburtsjahr: player.geburtsjahr,
+          email: player.email,
+        }),
+      });
+
+      if (response.ok) {
+        alert(
+          `Spieler ${player.vorname} ${player.nachname}, Geburtsjahr ${player.geburtsjahr}, wurde registriert!`
+        );
+        setPlayer({ vorname: "", nachname: "", geburtsjahr: null, email: "" });
+      } else {
+        const errorText = await response.text();
+        alert(`Fehler: ${errorText}`);
+      }
+    } catch (error) {
+      console.error("Fehler beim Registrieren:", error);
+      alert("Ein unerwarteter Fehler ist aufgetreten.");
+    }
   };
 
   return (
@@ -46,9 +70,9 @@ const RegisterPlayer = () => {
           <Grid container spacing={2} direction="column" alignItems="center">
             <Grid item sx={{ width: "100%", maxWidth: 300 }}>
               <TextField
-                name="vname"
-                label="Vorame"
-                value={player.vname}
+                name="vorname"
+                label="Vorname"
+                value={player.vorname}
                 onChange={handleChange}
                 required
                 fullWidth
@@ -57,9 +81,9 @@ const RegisterPlayer = () => {
             </Grid>
             <Grid item sx={{ width: "100%", maxWidth: 300 }}>
               <TextField
-                name="nname"
+                name="nachname"
                 label="Nachname"
-                value={player.nname}
+                value={player.nachname}
                 onChange={handleChange}
                 required
                 fullWidth
@@ -72,7 +96,7 @@ const RegisterPlayer = () => {
                   views={["year"]}
                   label="Geburtsjahr"
                   value={
-                    player.birthYear ? new Date(player.birthYear, 0) : null
+                    player.geburtsjahr ? new Date(player.geburtsjahr, 0) : null
                   }
                   onChange={handleDateChange}
                   slotProps={{
@@ -88,9 +112,9 @@ const RegisterPlayer = () => {
             </Grid>
             <Grid item sx={{ width: "100%", maxWidth: 300 }}>
               <TextField
-                name="mail"
+                name="email"
                 label="E-Mail"
-                value={player.mail}
+                value={player.email}
                 onChange={handleChange}
                 required
                 fullWidth
