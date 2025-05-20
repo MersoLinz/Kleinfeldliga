@@ -28,29 +28,6 @@ app.listen(port, () => {
   console.log(`Server startet on port ${port}`);
 });
 
-app.get("/mannschaft", (req, res) => {
-  const query = `SELECT * FROM mannschaft`;
-  connection.query(query, (error, mannschaft) => {
-    if (error) {
-      res.status(500).send("interner Serverfehler");
-    } else {
-      res.json(mannschaft);
-    }
-  });
-});
-
-app.post("/addNewTeam", (req, res) => {
-  const mannschaft = req.body.mannschaft;
-  const query = `INSERT INTO mannschaft VALUES ("${mannschaft}")`;
-  connection.query(query, (error, results) => {
-    if (error) {
-      res.status(500).send("interner Serverfehler");
-    } else {
-      res.status(201).send("Team wurde angelegt");
-    }
-  });
-});
-
 app.get("/spieler", (req, res) => {
   const query = "SELECT * FROM spieler";
   connection.query(query, (error, spieler) => {
@@ -62,7 +39,7 @@ app.get("/spieler", (req, res) => {
   });
 });
 
-app.post("/addNewPlayer", (req, res) => {
+app.post("/neuerSpieler", (req, res) => {
   console.log("Eingehende Daten:", req.body); // 👈 HIER
   const { vorname, nachname, geburtsjahr, email } = req.body;
 
@@ -83,4 +60,61 @@ app.post("/addNewPlayer", (req, res) => {
       }
     }
   );
+});
+
+app.get("/mannschaften", (req, res) => {
+  const query = "SELECT * FROM mannschaften ORDER BY id";
+  connection.query(query, (error, mannschaften) => {
+    if (error) {
+      res.status(500).send("interner Serverfehler");
+    } else {
+      res.json(mannschaften);
+    }
+  });
+});
+
+app.get("/saison", (req, res) => {
+  const query = "SELECT * FROM saisons ORDER BY jahr DESC";
+  connection.query(query, (error, saison) => {
+    if (error) {
+      res.status(500).send("interner Serverfehler");
+    } else {
+      res.json(saison);
+    }
+  });
+});
+
+app.get("/spieltage", (req, res) => {
+  const query = "SELECT * FROM spieltage WHERE saison_id = ? ORDER BY nummer";
+  connection.query(query, (error, saison) => {
+    if (error) {
+      res.status(500).send("interner Serverfehler");
+    } else {
+      res.json(saison);
+    }
+  });
+});
+
+app.get("/spiele", (req, res) => {
+  const { saison, spieltag } = req.query;
+
+  const query = `
+    SELECT s.id,
+           m1.name AS heimmannschaft,
+           m2.name AS gastmannschaft,
+           s.heimtore,
+           s.gasttore,
+           s.heimmannschaft_id,
+           s.gastmannschaft_id
+    FROM spiele s
+    JOIN mannschaften m1 ON s.heimmannschaft_id = m1.id
+    JOIN mannschaften m2 ON s.gastmannschaft_id = m2.id
+    WHERE s.saison_id = ? AND s.spieltag_id = ?
+    ORDER BY s.id
+  `;
+
+  connection.query(query, [saison, spieltag], (err, rows) => {
+    if (err) return res.status(500).json({ fehler: err.message });
+    res.json(rows);
+  });
 });

@@ -1,10 +1,11 @@
 import "./App.css";
 import ResponsiveAppBar from "./components/Navbar";
-import RegisterPlayer from "./components/register";
+import RegisterPlayer from "./components/Register";
 import Tabelle from "./components/Tabelle";
 import Teams from "./components/Teams";
-import Wappen from "./components/wappen";
-import News from "./components/news";
+import Wappen from "./components/Wappen";
+import News from "./components/News";
+import Spiele from "./components/Spiele";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <RegisterPlayer />
       <Teams />
       <Tabelle />
+      <Spiele />
       <News />
     </>
   );
