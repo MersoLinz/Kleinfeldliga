@@ -74,7 +74,7 @@ app.get("/mannschaften", (req, res) => {
 });
 
 app.get("/saison", (req, res) => {
-  const query = "SELECT * FROM saisons ORDER BY jahr DESC";
+  const query = "SELECT * FROM saison ORDER BY jahr DESC";
   connection.query(query, (error, saison) => {
     if (error) {
       res.status(500).send("interner Serverfehler");
@@ -117,4 +117,36 @@ app.get("/spiele", (req, res) => {
     if (err) return res.status(500).json({ fehler: err.message });
     res.json(rows);
   });
+});
+
+app.post("/ergebnisse", (req, res) => {
+  const { ergebnisse } = req.body;
+
+  console.log("Empfangene Ergebnisse:", ergebnisse);
+
+  const updates = ergebnisse.map((spiel) => {
+    console.log("Verarbeite Spiel:", spiel);
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE spiele
+        SET heimtore = ?, gasttore = ?
+        WHERE id = ?
+      `;
+      connection.query(
+        query,
+        [spiel.heimtore, spiel.gasttore, spiel.id],
+        (err, result) => {
+          if (err) reject(err);
+          else resolve();
+        }
+      );
+    });
+  });
+
+  Promise.all(updates)
+    .then(() => res.json({ nachricht: "Ergebnisse erfolgreich gespeichert" }))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ fehler: "Fehler beim Speichern der Ergebnisse" });
+    });
 });
