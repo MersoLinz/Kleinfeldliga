@@ -12,10 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import logo from "../assets/Logo.jpg"; // Pfad relativ zur Datei
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/Logo.jpg";
 
 const pages = [
-  "            ",
   "News",
   "Teams",
   "Tabelle",
@@ -25,7 +25,8 @@ const pages = [
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar() {
+function Navbar(props) {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -36,7 +37,8 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page) => {
+    navigate(`/${page.toLowerCase()}`);
     setAnchorElNav(null);
   };
 
@@ -53,7 +55,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="Kleinfeldliga"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -71,7 +73,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="Kleinfeldliga"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -107,7 +109,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="Kleinfeldliga"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -125,7 +127,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -165,7 +167,8 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
+      {props.children}
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+export default Navbar;

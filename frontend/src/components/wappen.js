@@ -8,6 +8,7 @@ import t from "../assets/t.png";
 import bgld from "../assets/bgld.png";
 import stmk from "../assets/stmk.png";
 import ktn from "../assets/ktn.png";
+import { Navigate } from "react-router-dom"; // --> Falsche Verwendung von Navigate
 
 function Wappen() {
   return (
@@ -22,7 +23,12 @@ function Wappen() {
           height: 100,
         }}
       >
-        <img src={ooe} alt="OÖ" style={{ height: 50, margin: 10 }} />
+        <img
+          src={ooe}
+          alt="OÖ"
+          style={{ height: 50, margin: 10 }}
+          onClick={() => Navigate("*")} // --> Falsche Verwendung von Navigate
+        />
         <img src={ktn} alt="KTN" style={{ height: 50, margin: 10 }} />
         <img src={w} alt="WIEN" style={{ height: 50, margin: 10 }} />
         <img src={vbg} alt="VBG" style={{ height: 50, margin: 10 }} />

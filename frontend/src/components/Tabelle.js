@@ -1,111 +1,142 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    fontWeight: "bold",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
-function createData(
-  name,
-  spiele,
-  siege,
-  unentschieden,
-  niederlagen,
-  tore,
-  gegentore,
-  punkte
-) {
-  return {
-    name,
-    spiele,
-    siege,
-    unentschieden,
-    niederlagen,
-    tore,
-    gegentore,
-    punkte,
-  };
-}
-
-const rows = [
-  createData("Mannschaft 1", 15, 10, 3, 2, 35, 20, 33),
-  createData("Mannschaft 2", 15, 9, 4, 2, 30, 18, 31),
-  createData("Mannschaft 3", 15, 8, 5, 2, 28, 22, 29),
-  createData("Mannschaft 4", 15, 7, 3, 5, 25, 24, 24),
-  createData("Mannschaft 5", 15, 6, 4, 5, 22, 25, 22),
-  createData("Mannschaft 6", 15, 5, 3, 7, 20, 27, 18),
-  createData("Mannschaft 7", 15, 4, 4, 7, 18, 28, 16),
-  createData("Mannschaft 8", 15, 3, 3, 9, 15, 30, 12),
-  createData("Mannschaft 9", 15, 2, 2, 11, 12, 35, 8),
-  createData("Mannschaft 10", 15, 1, 1, 13, 10, 38, 4),
-];
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 export default function Spieltabelle() {
+  const [tabelle, setTabelle] = useState([]);
+  const [saisons, setSaisons] = useState([]);
+  const [selectedSaison, setSelectedSaison] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:7777/alle-saisons")
+      .then((res) => res.json())
+      .then((saisons) => {
+        setSaisons(saisons);
+        if (saisons.length > 0) {
+          setSelectedSaison(saisons[0]);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!selectedSaison) return;
+
+    fetch(`http://localhost:7777/tabelle?saison=${selectedSaison}`)
+      .then((res) => res.json())
+      .then((data) => setTabelle(data));
+  }, [selectedSaison]);
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="Spieltabelle">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Platz</StyledTableCell>
-            <StyledTableCell>Mannschaft</StyledTableCell>
-            <StyledTableCell align="center">Sp</StyledTableCell>
-            <StyledTableCell align="center">S</StyledTableCell>
-            <StyledTableCell align="center">U</StyledTableCell>
-            <StyledTableCell align="center">N</StyledTableCell>
-            <StyledTableCell align="center">Tore</StyledTableCell>
-            <StyledTableCell align="center">GT</StyledTableCell>
-            <StyledTableCell align="center">TD</StyledTableCell>
-            <StyledTableCell align="center">Pkt</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {index + 1}
-              </StyledTableCell>
-              <StyledTableCell>{row.name}</StyledTableCell>
-              <StyledTableCell align="center">{row.spiele}</StyledTableCell>
-              <StyledTableCell align="center">{row.siege}</StyledTableCell>
-              <StyledTableCell align="center">
-                {row.unentschieden}
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {row.niederlagen}
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.tore}</StyledTableCell>
-              <StyledTableCell align="center">{row.gegentore}</StyledTableCell>
-              <StyledTableCell align="center">
-                {row.tore - row.gegentore}
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.punkte}</StyledTableCell>
-            </StyledTableRow>
+    <div style={{ maxWidth: "80%", margin: "auto", padding: "20px" }}>
+      <Paper style={{ padding: 20 }}>
+        <h2 style={{ textAlign: "center" }}>
+          Tabelle – Saison {selectedSaison}
+        </h2>
+
+        <Select
+          value={selectedSaison || ""}
+          onChange={(e) => setSelectedSaison(e.target.value)}
+          style={{ marginBottom: 20 }}
+        >
+          {saisons.map((jahr) => (
+            <MenuItem key={jahr} value={jahr}>
+              {jahr}
+            </MenuItem>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </Select>
+
+        <TableContainer>
+          <Table>
+            <TableHead style={{ backgroundColor: "#f0f0f0" }}>
+              <TableRow>
+                <TableCell style={{ paddingRight: 0, fontWeight: "bold" }}>
+                  Platz
+                </TableCell>
+                <TableCell style={{ paddingLeft: 0, fontWeight: "bold" }}>
+                  Mannschaft
+                </TableCell>
+
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Sp
+                </TableCell>
+
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                >
+                  S
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                >
+                  U
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                >
+                  N
+                </TableCell>
+
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                >
+                  T
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                >
+                  GT
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                >
+                  TD
+                </TableCell>
+
+                <TableCell
+                  align="center"
+                  style={{ padding: "6px 6px", fontWeight: "bold" }}
+                >
+                  Pkt
+                </TableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {tabelle.map((row, idx) => (
+                <TableRow key={row.id}>
+                  <TableCell style={{ paddingRight: 2 }}>{idx + 1}</TableCell>
+                  <TableCell style={{ paddingLeft: 2 }}>{row.name}</TableCell>
+                  <TableCell align="center">{row.spiele}</TableCell>
+                  <TableCell align="center">{row.siege}</TableCell>
+                  <TableCell align="center">{row.unentschieden}</TableCell>
+                  <TableCell align="center">{row.niederlagen}</TableCell>
+                  <TableCell align="center">{row.tore}</TableCell>
+                  <TableCell align="center">{row.gegentore}</TableCell>
+                  <TableCell align="center">{row.tordifferenz}</TableCell>
+                  <TableCell style={{ fontWeight: "bold" }} align="center">
+                    {row.punkte}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </div>
   );
 }

@@ -37,8 +37,13 @@ const News = () => {
   };
 
   return (
-    <Grid container direction="column" alignItems="center" spacing={2}>
-      {/* Post Editor */}
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      spacing={2}
+      marginTop={20}
+    >
       <Grid item sx={{ width: "100%", maxWidth: 600 }}>
         <Card sx={{ p: 2 }}>
           <TextField
@@ -73,7 +78,6 @@ const News = () => {
         </Card>
       </Grid>
 
-      {/* Feed */}
       <Grid item sx={{ width: "100%", maxWidth: 600 }}>
         {posts.map((post) => (
           <Card key={post.id} sx={{ mt: 2 }}>
