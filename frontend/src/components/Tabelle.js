@@ -71,38 +71,38 @@ export default function Spieltabelle() {
 
                 <TableCell
                   align="center"
-                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                  style={{ padding: "6px", width: "0px", fontWeight: "bold" }}
                 >
                   S
                 </TableCell>
                 <TableCell
                   align="center"
-                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                  style={{ padding: "6px", width: "0px", fontWeight: "bold" }}
                 >
                   U
                 </TableCell>
                 <TableCell
                   align="center"
-                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                  style={{ padding: "6px", width: "0px", fontWeight: "bold" }}
                 >
                   N
                 </TableCell>
 
                 <TableCell
                   align="center"
-                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                  style={{ padding: "6px", paddingLeft: "20px", width: "0px", fontWeight: "bold" }}
                 >
                   T
                 </TableCell>
                 <TableCell
                   align="center"
-                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                  style={{ padding: "6px", width: "0px", fontWeight: "bold" }}
                 >
                   GT
                 </TableCell>
                 <TableCell
                   align="center"
-                  style={{ padding: "6px 2px", fontWeight: "bold" }}
+                  style={{ padding: "6px", width: "0px", fontWeight: "bold" }}
                 >
                   TD
                 </TableCell>
@@ -125,7 +125,7 @@ export default function Spieltabelle() {
                   <TableCell align="center">{row.siege}</TableCell>
                   <TableCell align="center">{row.unentschieden}</TableCell>
                   <TableCell align="center">{row.niederlagen}</TableCell>
-                  <TableCell align="center">{row.tore}</TableCell>
+                  <TableCell style={{ paddingLeft: 30 }} align="center">{row.tore}</TableCell>
                   <TableCell align="center">{row.gegentore}</TableCell>
                   <TableCell align="center">{row.tordifferenz}</TableCell>
                   <TableCell style={{ fontWeight: "bold" }} align="center">

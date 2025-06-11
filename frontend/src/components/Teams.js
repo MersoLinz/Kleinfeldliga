@@ -1,5 +1,5 @@
 import { red } from "@mui/material/colors";
-import stmk from "../assets/stmk.png";
+import stmk from "../assets/wappen/stmk.png";
 import * as React from "react";
 
 function Teams() {

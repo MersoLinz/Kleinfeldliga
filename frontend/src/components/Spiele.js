@@ -90,7 +90,7 @@ export default function Spiele() {
 
   return (
     <div style={{ marginLeft: 50, padding: 20 }}>
-      <h2 style={{ textAlign: "center", fontSize: 24 }}>
+      <h2 style={{ textAlign: "center", marginTop: 50, fontWeight: "bold" , fontSize: 24 }}>
         Spieltag {spieltag + 1} – Saison {saison}
       </h2>
 

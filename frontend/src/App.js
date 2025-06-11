@@ -7,7 +7,9 @@ import News from "./components/News";
 import Spiele from "./components/Spiele";
 import Pagenotfound from "./components/Pagenotfound";
 import Rapper from "./components/Rapper";
+import Start from "./components/Start";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 
 function App() {
   return (
@@ -16,7 +18,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<Rapper />}>
-            <Route path="/kleinfeldliga" element={<News />} />
+            <Route path="/" element={<Start />} />
+            <Route path="/kleinfeldliga" element={<Start />} />
             <Route path="/news" element={<News />} />
             <Route path="/teams" element={<Teams />} />
             <Route path="/tabelle" element={<Tabelle />} />

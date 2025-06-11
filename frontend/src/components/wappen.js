@@ -1,13 +1,13 @@
 import * as React from "react";
-import ooe from "../assets/ooe.png";
-import noe from "../assets/noe.png";
-import sbg from "../assets/sbg.png";
-import w from "../assets/w.png";
-import vbg from "../assets/vbg.png";
-import t from "../assets/t.png";
-import bgld from "../assets/bgld.png";
-import stmk from "../assets/stmk.png";
-import ktn from "../assets/ktn.png";
+import ooe from "../assets/wappen/ooe.png";
+import noe from "../assets/wappen/noe.png";
+import sbg from "../assets/wappen/sbg.png";
+import w from "../assets/wappen/w.png";
+import vbg from "../assets/wappen/vbg.png";
+import t from "../assets/wappen/t.png";
+import bgld from "../assets/wappen/bgld.png";
+import stmk from "../assets/wappen/stmk.png";
+import ktn from "../assets/wappen/ktn.png";
 import { Navigate } from "react-router-dom"; // --> Falsche Verwendung von Navigate
 
 function Wappen() {

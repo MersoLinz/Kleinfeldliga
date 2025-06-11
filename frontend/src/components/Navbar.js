@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/Logo.jpg";
+import logo from "../assets/wappen/Logo.jpg";
 
 const pages = [
   "News",
