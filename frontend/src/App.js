@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import "./App.css";
 import RegisterPlayer from "./components/RegisterPlayer";
 import Tabelle from "./components/Tabelle";
@@ -9,14 +10,20 @@ import Pagenotfound from "./components/Pagenotfound";
 import Rapper from "./components/Rapper";
 import Start from "./components/Start";
 import Footer from "./components/Footer";
+import Liga from "./components/Ligen";
+import Liganotfound from "./components/Liganotfound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-
 function App() {
+  const [selectedState, setSelectedState] = useState(null);
+
   return (
     <>
-      <Wappen />
       <BrowserRouter>
+        <Wappen onSelect={(stateCode) => setSelectedState(stateCode)} />
+        {selectedState === "OOE" && <Liga />}
+        {selectedState && selectedState !== "OOE" && <Liganotfound />}
+        
         <Routes>
           <Route element={<Rapper />}>
             <Route path="/" element={<Start />} />
@@ -25,7 +32,6 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/tabelle" element={<Tabelle />} />
             <Route path="/spielplan" element={<Spiele />} />
-            <Route path="/spielerstatistik" element={<RegisterPlayer />} />
             <Route path="*" element={<Pagenotfound />} />
           </Route>
         </Routes>

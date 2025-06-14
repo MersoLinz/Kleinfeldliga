@@ -16,7 +16,7 @@ function Start() {
             color: "black",
             fontSize: 50,
             letterSpacing: ".1rem",
-            marginTop: 20,
+            marginTop: 25,
           }}
         >
           Kleinfeldliga IQRA Linz
