@@ -17,6 +17,7 @@ import {
   TableHead,
   Grid,
 } from "@mui/material";
+import Pagenotfound from "./Pagenotfound";
 
 export default function Spiele() {
   const [spieltag, setSpieltag] = useState(0);
@@ -94,21 +95,21 @@ export default function Spiele() {
         Spieltag {spieltag + 1} – Saison {saison}
       </h2>
 
-      <FormControl style={{ minWidth: 120, margin: 20 }}>
-        <InputLabel id="saison-label">Saison</InputLabel>
-        <Select
-          labelId="saison-label"
-          value={saison}
-          label="Saison"
-          onChange={(e) => setSaison(e.target.value)}
-        >
-          {verfügbareSaisons.map((jahr) => (
-            <MenuItem key={jahr} value={jahr}>
-              {jahr}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <FormControl variant="standard" style={{ minWidth: 120, margin: 20 }}>
+  <InputLabel id="saison-label">Saison</InputLabel>
+  <Select
+    labelId="saison-label"
+    value={saison}
+    onChange={(e) => setSaison(e.target.value)}
+  >
+    {verfügbareSaisons.map((jahr) => (
+      <MenuItem key={jahr} value={jahr}>
+        {jahr}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Tabs

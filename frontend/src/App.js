@@ -13,12 +13,15 @@ import Footer from "./components/Footer";
 import Liga from "./components/Ligen";
 import Liganotfound from "./components/Liganotfound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Ligaordnung from "./components/Ligaordnung";
+import { LigaProvider } from "./components/LigaContext";
+
 
 function App() {
   const [selectedState, setSelectedState] = useState(null);
 
   return (
-    <>
+    <LigaProvider>
       <BrowserRouter>
         <Wappen onSelect={(stateCode) => setSelectedState(stateCode)} />
         {selectedState === "OOE" && <Liga />}
@@ -32,12 +35,13 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/tabelle" element={<Tabelle />} />
             <Route path="/spielplan" element={<Spiele />} />
+            <Route path="/ligaordnung" element={<Ligaordnung />} />
             <Route path="*" element={<Pagenotfound />} />
           </Route>
         </Routes>
       </BrowserRouter>
       <Footer />
-    </>
+    </LigaProvider>
   );
 }
 

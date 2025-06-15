@@ -10,6 +10,9 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { FormControl, InputLabel } from "@mui/material";
+import Pagenotfound from "./Pagenotfound";
+
 
 export default function Spieltabelle() {
   const [tabelle, setTabelle] = useState([]);
@@ -41,18 +44,20 @@ export default function Spieltabelle() {
         <h2 style={{ textAlign: "center" }}>
           Tabelle – Saison {selectedSaison}
         </h2>
-
-        <Select
-          value={selectedSaison || ""}
-          onChange={(e) => setSelectedSaison(e.target.value)}
-          style={{ marginBottom: 20 }}
-        >
-          {saisons.map((jahr) => (
-            <MenuItem key={jahr} value={jahr}>
-              {jahr}
-            </MenuItem>
-          ))}
-        </Select>
+        <FormControl variant="standard" style={{ minWidth: 120, marginBottom: 20 }}>
+  <InputLabel id="saison-label">Saison</InputLabel>
+  <Select
+    labelId="saison-label"
+    value={selectedSaison || ""}
+    onChange={(e) => setSelectedSaison(e.target.value)}
+  >
+    {saisons.map((jahr) => (
+      <MenuItem key={jahr} value={jahr}>
+        {jahr}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
 
         <TableContainer>
           <Table>
