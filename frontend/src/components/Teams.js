@@ -7,7 +7,6 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
-
 import L1 from "../assets/logos/L1.PNG";
 import L2 from "../assets/logos/L2.PNG";
 import L3 from "../assets/logos/L3.PNG";
@@ -19,18 +18,7 @@ import L8 from "../assets/logos/L8.PNG";
 import L9 from "../assets/logos/L9.PNG";
 import L10 from "../assets/logos/L10.PNG";
 
-const logoMap = {
-  1: L1,
-  2: L2,
-  3: L3,
-  4: L4,
-  5: L5,
-  6: L6,
-  7: L7,
-  8: L8,
-  9: L9,
-  10: L10,
-};
+const logoMap = {1: L1, 2: L2, 3: L3, 4: L4, 5: L5, 6: L6, 7: L7, 8: L8, 9: L9, 10: L10};
 
 const Mannschaften = () => {
   const [mannschaften, setMannschaften] = useState([]);

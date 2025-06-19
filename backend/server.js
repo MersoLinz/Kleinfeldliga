@@ -186,7 +186,10 @@ app.post("/neue-saison", async (req, res) => {
       return schedule; // Array mit Spieltagen
     }
 
-    const spielplan = generateRoundRobinSchedule(mannschaften); // 9 Spieltage × 5 Spiele
+    const spielplanHinrunde = generateRoundRobinSchedule(mannschaften);
+    const spielplanRueckrunde = spielplanHinrunde.map((spieltag) =>
+    spieltag.map(([heim, gast]) => [gast, heim]));
+    const spielplan = [...spielplanHinrunde, ...spielplanRueckrunde]; // jetzt 18 Spieltage
 
     // Spiele direkt mit saison + spieltag einfügen
     for (let i = 0; i < spielplan.length; i++) {
@@ -225,6 +228,7 @@ app.get("/tabelle", (req, res) => {
 SELECT 
   m.id,
   m.name,
+  m.wappen,
 
   COUNT(CASE 
     WHEN s.heimtore IS NOT NULL AND s.gasttore IS NOT NULL THEN 1 

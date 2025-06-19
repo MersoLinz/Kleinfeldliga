@@ -16,27 +16,31 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Ligaordnung from "./components/Ligaordnung";
 import { LigaProvider } from "./components/LigaContext";
 
-
 function App() {
-  const [selectedState, setSelectedState] = useState(null);
+  const [selectedState, setSelectedState] = useState("OOE");
+
+  const handleStateSelect = (stateCode) => {
+    if (stateCode !== selectedState) {
+      setSelectedState(stateCode);
+    }
+  };
 
   return (
     <LigaProvider>
       <BrowserRouter>
-        <Wappen onSelect={(stateCode) => setSelectedState(stateCode)} />
-        {selectedState === "OOE" && <Liga />}
-        {selectedState && selectedState !== "OOE" && <Liganotfound />}
-        
+        <Wappen onSelect={handleStateSelect} />
+        {selectedState === "OOE" ? <Liga /> : <Liganotfound />}
         <Routes>
           <Route element={<Rapper />}>
             <Route path="/" element={<Start />} />
             <Route path="/kleinfeldliga" element={<Start />} />
             <Route path="/news" element={<News />} />
-            <Route path="/teams" element={<Teams />} />
-            <Route path="/tabelle" element={<Tabelle />} />
-            <Route path="/spielplan" element={<Spiele />} />
+            <Route path="/teams" element={selectedState === "OOE" ? <Teams /> : <Pagenotfound />} />
+            <Route path="/tabelle" element={selectedState === "OOE" ? <Tabelle /> : <Pagenotfound />}/>
+            <Route path="/spielplan" element={selectedState === "OOE" ? <Spiele /> : <Pagenotfound />}/>
             <Route path="/ligaordnung" element={<Ligaordnung />} />
             <Route path="*" element={<Pagenotfound />} />
+            <Route path="/register" element={<RegisterPlayer />} />
           </Route>
         </Routes>
       </BrowserRouter>

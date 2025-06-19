@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
 import ooe from "../assets/wappen/ooe.png";
 import ktn from "../assets/wappen/ktn.png";
 import w from "../assets/wappen/w.png";
@@ -10,8 +9,11 @@ import bgld from "../assets/wappen/bgld.png";
 import noe from "../assets/wappen/noe.png";
 import sbg from "../assets/wappen/sbg.png";
 import stmk from "../assets/wappen/stmk.png";
+import { LigaContext } from "./LigaContext";
 
 function Wappen({ onSelect }) {
+
+  const {setBundesland} = useContext(LigaContext);
 
   const imgStyle = {
   height: 50,
@@ -23,6 +25,7 @@ function Wappen({ onSelect }) {
 
   const handleSelect = (stateCode) => {
     onSelect(stateCode);
+    setBundesland(stateCode);
     navigate("/");
   };
 
@@ -40,7 +43,5 @@ function Wappen({ onSelect }) {
     </div>
   );
 }
-
-
 
 export default Wappen;

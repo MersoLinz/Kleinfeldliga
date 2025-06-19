@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 
-const LigaContext = createContext();
+export const LigaContext = createContext();
 
 export function LigaProvider({ children }) {
-  const [bundesland, setBundesland] = useState(null);
+  const [bundesland, setBundesland] = useState(2);
   const [liga, setLiga] = useState(null);
 
   return (

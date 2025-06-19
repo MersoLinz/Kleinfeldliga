@@ -14,25 +14,23 @@ import {
   Select,
   FormControl,
   InputLabel,
-  TableHead,
   Grid,
 } from "@mui/material";
-import Pagenotfound from "./Pagenotfound";
 
 export default function Spiele() {
   const [spieltag, setSpieltag] = useState(0);
   const [spiele, setSpiele] = useState([]);
   const [saison, setSaison] = useState("2025");
   const [verfügbareSaisons, setVerfügbareSaisons] = useState([]);
-  const [tabelle, setTabelle] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:7777/alle-saisons")
       .then((res) => res.json())
       .then((data) => {
-        setVerfügbareSaisons(data);
-        if (!data.includes(Number(saison))) {
-          setSaison(String(data[0]));
+        if (Array.isArray(data) && data.length > 0) {
+          const neuesteSaison = Math.max(...data);
+          setVerfügbareSaisons(data);
+          setSaison(String(neuesteSaison));
         }
       })
       .catch((err) => {
@@ -52,16 +50,6 @@ export default function Spiele() {
         alert("Fehler beim Laden der Spiele");
       });
   }, [spieltag, saison]);
-
-  useEffect(() => {
-    fetch(`http://localhost:7777/tabelle?saison=${saison}`)
-      .then((res) => res.json())
-      .then((data) => setTabelle(data))
-      .catch((err) => {
-        console.error(err);
-        alert("Fehler beim Laden der Tabelle");
-      });
-  }, [saison, spiele]);
 
   const handleToreUpdate = (index, key, value) => {
     const neueSpiele = [...spiele];
@@ -91,25 +79,24 @@ export default function Spiele() {
 
   return (
     <div style={{ marginLeft: 50, padding: 20 }}>
-      <h2 style={{ textAlign: "center", marginTop: 50, fontWeight: "bold" , fontSize: 24 }}>
+      <h2 style={{ textAlign: "center", marginTop: 50, fontWeight: "bold", fontSize: 24 }}>
         Spieltag {spieltag + 1} – Saison {saison}
       </h2>
 
-    <FormControl variant="standard" style={{ minWidth: 120, margin: 20 }}>
-  <InputLabel id="saison-label">Saison</InputLabel>
-  <Select
-    labelId="saison-label"
-    value={saison}
-    onChange={(e) => setSaison(e.target.value)}
-  >
-    {verfügbareSaisons.map((jahr) => (
-      <MenuItem key={jahr} value={jahr}>
-        {jahr}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
+      <FormControl variant="standard" style={{ minWidth: 120, margin: 20 }}>
+        <InputLabel id="saison-label">Saison</InputLabel>
+        <Select
+          labelId="saison-label"
+          value={saison}
+          onChange={(e) => setSaison(e.target.value)}
+        >
+          {verfügbareSaisons.map((jahr) => (
+            <MenuItem key={jahr} value={jahr}>
+              {jahr}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Tabs
@@ -189,6 +176,7 @@ export default function Spiele() {
           <Button variant="contained" color="primary" onClick={handleSpeichern}>
             Ergebnisse speichern
           </Button>
+
           {spieltag === 17 && (
             <Button
               variant="contained"
