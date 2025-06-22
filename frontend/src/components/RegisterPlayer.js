@@ -16,6 +16,7 @@ const RegisterPlayer = () => {
     nachname: "",
     geburtsjahr: null,
     email: "",
+    mannschaft_id: "",
   });
 
   const handleChange = (e) => {
@@ -32,7 +33,7 @@ const RegisterPlayer = () => {
     console.log("Neuer Spieler registriert:", player);
 
     try {
-      const response = await fetch("http://localhost:7777/addNewPlayer", {
+      const response = await fetch("http://localhost:7777/neuerSpieler", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,6 +43,7 @@ const RegisterPlayer = () => {
           nachname: player.nachname,
           geburtsjahr: player.geburtsjahr,
           email: player.email,
+          mannschaft_id: player.mannschaft_id,
         }),
       });
 
@@ -49,7 +51,7 @@ const RegisterPlayer = () => {
         alert(
           `Spieler ${player.vorname} ${player.nachname}, Geburtsjahr ${player.geburtsjahr}, wurde registriert!`
         );
-        setPlayer({ vorname: "", nachname: "", geburtsjahr: null, email: "" });
+        setPlayer({ vorname: "", nachname: "", geburtsjahr: null, email: "", mannschaft_id: "" });
       } else {
         const errorText = await response.text();
         alert(`Fehler: ${errorText}`);
@@ -115,6 +117,17 @@ const RegisterPlayer = () => {
                 name="email"
                 label="E-Mail"
                 value={player.email}
+                onChange={handleChange}
+                required
+                fullWidth
+                InputLabelProps={{ required: true }}
+              />
+            </Grid>
+            <Grid item sx={{ width: "100%", maxWidth: 300 }}>
+              <TextField
+                name="mannschaft_id"
+                label="Mannschaft ID"
+                value={player.mannschaft_id}
                 onChange={handleChange}
                 required
                 fullWidth

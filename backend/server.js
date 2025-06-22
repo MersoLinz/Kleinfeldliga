@@ -358,16 +358,16 @@ app.get("/spieler", (req, res) => {
 
 app.post("/neuerSpieler", (req, res) => {
   console.log("Eingehende Daten:", req.body); // 👈 HIER
-  const { vorname, nachname, geburtsjahr, email } = req.body;
+  const { vorname, nachname, geburtsjahr, email, mannschaft_id } = req.body;
 
-  if (!vorname || !nachname || !geburtsjahr || !email) {
+  if (!vorname || !nachname || !geburtsjahr || !email || !mannschaft_id) {
     return res.status(400).send("Alle Felder müssen ausgefüllt sein");
   }
 
-  const query = `INSERT INTO spieler (vorname, nachname, geburtsjahr, email) VALUES (?, ?, ?, ?)`;
+  const query = `INSERT INTO spieler (vorname, nachname, geburtsjahr, email, mannschaft_id) VALUES (?, ?, ?, ?, ?)`;
   connection.query(
     query,
-    [vorname, nachname, geburtsjahr, email],
+    [vorname, nachname, geburtsjahr, email, mannschaft_id],
     (error, results) => {
       if (error) {
         console.error(error);
