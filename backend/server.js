@@ -1,9 +1,40 @@
 import express, { response } from "express";
 import cors from "cors";
 import mysql from "mysql";
+import multer from "multer";
+import fs from "fs";
+import { v2 as cloudinary } from 'cloudinary';
+const upload = multer({ dest: "uploads/" }); // Temp-Ordner für Bilder
 
 const app = express();
 const port = 7777;
+
+cloudinary.config({
+  cloud_name: 'drltrpag2',
+  api_key: '663795571325894',
+  api_secret: 'grmyXcRSISNkttQKbHxGcwsd7Mo'
+});
+
+async function uploadImage(localFilePath) {
+  try {
+    const result = await cloudinary.uploader.upload(localFilePath, {
+      folder: "news", // <-- Zielordner in Cloudinary
+    });
+
+    // Temporäre Datei löschen (nicht vergessen!)
+    fs.unlinkSync(localFilePath);
+
+    return result.secure_url;
+  } catch (error) {
+    console.error("Fehler beim Hochladen zu Cloudinary:", error);
+    // Datei trotzdem löschen, um Müll zu vermeiden
+    if (fs.existsSync(localFilePath)) {
+      fs.unlinkSync(localFilePath);
+    }
+    throw error;
+  }
+}
+
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -377,4 +408,59 @@ app.post("/neuerSpieler", (req, res) => {
       }
     }
   );
+});
+
+app.post("/news", upload.single("image"), async (req, res) => {
+  try {
+    const { text } = req.body;
+    const filePath = req.file?.path;
+
+    let imageUrl = null;
+
+    if (filePath) {
+      imageUrl = await uploadImage(filePath); // <-- Verwendung hier
+    }
+
+    const insertQuery = `INSERT INTO news (text, image_url) VALUES (?, ?)`;
+    connection.query(insertQuery, [text, imageUrl], (err, result) => {
+      if (err) {
+        console.error("Fehler beim Speichern:", err);
+        return res.status(500).send("Fehler beim Speichern des News-Posts");
+      }
+
+      res.json({
+        id: result.insertId,
+        text,
+        image: imageUrl,
+      });
+    });
+  } catch (error) {
+    res.status(500).send("Fehler beim Upload");
+  }
+});
+
+
+app.get("/news", (req, res) => {
+  connection.query("SELECT * FROM news ORDER BY id DESC", (err, results) => {
+    if (err) return res.status(500).send("Fehler beim Laden der News");
+    res.json(
+      results.map((row) => ({
+        id: row.id,
+        text: row.text,
+        image: row.image_url,
+      }))
+    );
+  });
+});
+
+app.delete("/news/:id", (req, res) => {
+  const id = req.params.id;
+  const deleteQuery = "DELETE FROM news WHERE id = ?";
+  connection.query(deleteQuery, [id], (err, result) => {
+    if (err) {
+      console.error("Fehler beim Löschen:", err);
+      return res.status(500).send("Fehler beim Löschen");
+    }
+    res.sendStatus(204);
+  });
 });

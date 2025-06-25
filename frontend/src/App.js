@@ -15,6 +15,7 @@ import Liganotfound from "./components/Liganotfound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Ligaordnung from "./components/Ligaordnung";
 import { LigaProvider } from "./components/LigaContext";
+import Spielregeln from "./components/Spielregeln";
 
 function App() {
   const [selectedState, setSelectedState] = useState("OOE");
@@ -39,6 +40,7 @@ function App() {
             <Route path="/tabelle" element={selectedState === "OOE" ? <Tabelle /> : <Pagenotfound />}/>
             <Route path="/spielplan" element={selectedState === "OOE" ? <Spiele /> : <Pagenotfound />}/>
             <Route path="/ligaordnung" element={<Ligaordnung />} />
+            <Route path="/spielregeln" element={<Spielregeln />} />
             <Route path="*" element={<Pagenotfound />} />
             <Route path="/register" element={<RegisterPlayer />} />
           </Route>
