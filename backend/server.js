@@ -111,11 +111,13 @@ app.get("/spiele", (req, res) => {
 
   const query = `
     SELECT 
-      s.id,
-      m1.name AS heimmannschaft,
-      m2.name AS gastmannschaft,
-      s.heimtore,
-      s.gasttore
+    s.id,
+    m1.id AS heimmannschaft_id,
+    m1.name AS heimmannschaft,
+    m2.id AS gastmannschaft_id,
+    m2.name AS gastmannschaft,
+    s.heimtore,
+    s.gasttore
     FROM spiele s
     JOIN mannschaften m1 ON s.heimmannschaft_id = m1.id
     JOIN mannschaften m2 ON s.gastmannschaft_id = m2.id

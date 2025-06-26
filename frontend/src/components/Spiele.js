@@ -17,6 +17,31 @@ import {
   Grid,
 } from "@mui/material";
 
+import L1 from "../assets/logos/L1.PNG";
+import L2 from "../assets/logos/L2.PNG";
+import L3 from "../assets/logos/L3.PNG";
+import L4 from "../assets/logos/L4.PNG";
+import L5 from "../assets/logos/L5.PNG";
+import L6 from "../assets/logos/L6.PNG";
+import L7 from "../assets/logos/L7.PNG";
+import L8 from "../assets/logos/L8.PNG";
+import L9 from "../assets/logos/L9.PNG";
+import L10 from "../assets/logos/L10.PNG";
+
+const logoMap = {
+  1: L1,
+  2: L2,
+  3: L3,
+  4: L4,
+  5: L5,
+  6: L6,
+  7: L7,
+  8: L8,
+  9: L9,
+  10: L10,
+};
+
+
 export default function Spiele() {
   const [spieltag, setSpieltag] = useState(0);
   const [spiele, setSpiele] = useState([]);
@@ -137,7 +162,13 @@ export default function Spiele() {
                 {spiele.map((spiel, index) => (
                   <TableRow key={spiel.id}>
                     <TableCell style={{ width: 150, textAlign: "right" }}>
-                      {spiel.heimmannschaft}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8 }}>
+                        <span>{spiel.heimmannschaft}</span>
+                          <img
+                          src={logoMap[spiel.heimmannschaft_id]}
+                          alt="Heimlogo"
+                          style={{ width: 24, height: 24, objectFit: "contain" }}/>
+                      </div>
                     </TableCell>
                     <TableCell>
                       <TextField
@@ -165,7 +196,13 @@ export default function Spiele() {
                       />
                     </TableCell>
                     <TableCell style={{ width: 150, textAlign: "left" }}>
-                      {spiel.gastmannschaft}
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <img
+                          src={logoMap[spiel.gastmannschaft_id]}
+                          alt="Gastlogo"
+                          style={{ width: 24, height: 24, objectFit: "contain" }}/>
+                        <span>{spiel.gastmannschaft}</span>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

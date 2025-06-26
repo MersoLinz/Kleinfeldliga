@@ -50,7 +50,7 @@ const Footer = () => {
               Folge uns
             </Typography>
             <IconButton
-              href="https://facebook.com"
+              href="https://facebook.com/iqra.kleinfeldliga/"
               target="_blank"
               rel="noopener"
               sx={{ color: "#ffffff" }}
@@ -95,7 +95,7 @@ const Footer = () => {
 
         <Box mt={4} textAlign="center">
           <Typography variant="body2" color="gray">
-            © {new Date().getFullYear()} Deine Liga. Alle Rechte vorbehalten.
+            © {new Date().getFullYear()} Deine Liga. Alle Rechte vorbehalten. // Datum bleibt aktuell
           </Typography>
         </Box>
       </Container>
