@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import ErgebnisseSpeichernButton from "./Buttons/ErgebnisseSpeichernButton";
+import NeueSaisonButton from "./Buttons/NeueSaisonButton";
 import {
   Tabs,
   Tab,
@@ -9,7 +11,6 @@ import {
   TableRow,
   Paper,
   TextField,
-  Button,
   MenuItem,
   Select,
   FormControl,
@@ -83,23 +84,6 @@ export default function Spiele() {
       [key]: value === "" ? null : Number(value),
     };
     setSpiele(neueSpiele);
-  };
-
-  const handleSpeichern = () => {
-    fetch("http://localhost:7777/ergebnisse", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ergebnisse: spiele }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Fehler beim Speichern");
-        return res.json();
-      })
-      .then((data) => alert(data.nachricht || "Ergebnisse gespeichert"))
-      .catch((err) => {
-        console.error(err);
-        alert("Fehler beim Speichern der Ergebnisse");
-      });
   };
 
   return (
@@ -210,25 +194,10 @@ export default function Spiele() {
             </Table>
           </TableContainer>
 
-          <Button variant="contained" color="primary" onClick={handleSpeichern}>
-            Ergebnisse speichern
-          </Button>
+          <ErgebnisseSpeichernButton spiele={spiele} />
 
-          {spieltag === 17 && (
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                fetch("http://localhost:7777/neue-saison", { method: "POST" })
-                  .then((res) => res.json())
-                  .then((data) => alert(data.nachricht))
-                  .catch((err) => alert("Fehler beim Erstellen der Saison"));
-              }}
-              style={{ marginLeft: 20 }}
-            >
-              Neue Saison starten
-            </Button>
-          )}
+          {spieltag === 17 && <NeueSaisonButton />}
+
         </Grid>
       </Grid>
     </div>

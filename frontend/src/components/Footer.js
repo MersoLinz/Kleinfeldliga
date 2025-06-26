@@ -95,7 +95,7 @@ const Footer = () => {
 
         <Box mt={4} textAlign="center">
           <Typography variant="body2" color="gray">
-            © {new Date().getFullYear()} Deine Liga. Alle Rechte vorbehalten. // Datum bleibt aktuell
+            © 2025 Deine Liga. Alle Rechte vorbehalten.
           </Typography>
         </Box>
       </Container>

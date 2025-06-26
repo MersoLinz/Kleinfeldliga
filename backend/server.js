@@ -4,7 +4,7 @@ import mysql from "mysql";
 import multer from "multer";
 import fs from "fs";
 import { v2 as cloudinary } from 'cloudinary';
-const upload = multer({ dest: "uploads/" }); // Temp-Ordner für Bilder
+const upload = multer({ dest: "uploads/" });
 
 const app = express();
 const port = 7777;
@@ -18,10 +18,10 @@ cloudinary.config({
 async function uploadImage(localFilePath) {
   try {
     const result = await cloudinary.uploader.upload(localFilePath, {
-      folder: "news", // <-- Zielordner in Cloudinary
+      folder: "news",
     });
 
-    // Temporäre Datei löschen (nicht vergessen!)
+    // Temporäre Datei löschen
     fs.unlinkSync(localFilePath);
 
     return result.secure_url;
@@ -34,7 +34,6 @@ async function uploadImage(localFilePath) {
     throw error;
   }
 }
-
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -390,7 +389,7 @@ app.get("/spieler", (req, res) => {
 });
 
 app.post("/neuerSpieler", (req, res) => {
-  console.log("Eingehende Daten:", req.body); // 👈 HIER
+  console.log("Eingehende Daten:", req.body);
   const { vorname, nachname, geburtsjahr, email, mannschaft_id } = req.body;
 
   if (!vorname || !nachname || !geburtsjahr || !email || !mannschaft_id) {
@@ -420,7 +419,7 @@ app.post("/news", upload.single("image"), async (req, res) => {
     let imageUrl = null;
 
     if (filePath) {
-      imageUrl = await uploadImage(filePath); // <-- Verwendung hier
+      imageUrl = await uploadImage(filePath);
     }
 
     const insertQuery = `INSERT INTO news (text, image_url) VALUES (?, ?)`;
