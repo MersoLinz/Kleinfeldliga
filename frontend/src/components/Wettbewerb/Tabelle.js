@@ -11,17 +11,17 @@ import {
   MenuItem,
 } from "@mui/material";
 import { FormControl, InputLabel } from "@mui/material";
-import {LigaContext} from "./LigaContext";
-import L1 from "../assets/logos/L1.PNG";
-import L2 from "../assets/logos/L2.PNG";
-import L3 from "../assets/logos/L3.PNG";
-import L4 from "../assets/logos/L4.PNG";
-import L5 from "../assets/logos/L5.PNG";
-import L6 from "../assets/logos/L6.PNG";
-import L7 from "../assets/logos/L7.PNG";
-import L8 from "../assets/logos/L8.PNG";
-import L9 from "../assets/logos/L9.PNG";
-import L10 from "../assets/logos/L10.PNG";
+import {LigaContext} from "../Ligen/LigaContext";
+import L1 from "../../assets/logos/L1.PNG";
+import L2 from "../../assets/logos/L2.PNG";
+import L3 from "../../assets/logos/L3.PNG";
+import L4 from "../../assets/logos/L4.PNG";
+import L5 from "../../assets/logos/L5.PNG";
+import L6 from "../../assets/logos/L6.PNG";
+import L7 from "../../assets/logos/L7.PNG";
+import L8 from "../../assets/logos/L8.PNG";
+import L9 from "../../assets/logos/L9.PNG";
+import L10 from "../../assets/logos/L10.PNG";
 
 const logoMap = {
   L1: L1, L2: L2, L3: L3, L4: L4, L5: L5, L6: L6, L7: L7, L8: L8, L9: L9, L10: L10,
@@ -36,7 +36,7 @@ export default function Spieltabelle() {
   console.log("Bundesland:", bundesland);
 
   useEffect(() => {
-    fetch("http://localhost:7777/alle-saisons")
+    fetch("http://localhost:7777/saisons")
       .then((res) => res.json())
       .then((saisons) => {
         setSaisons(saisons);

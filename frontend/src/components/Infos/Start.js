@@ -1,4 +1,4 @@
-import start from "../assets/uploads/start.jpg";
+import start from "../../assets/uploads/start.jpg";
 
 function Start() {
   return (

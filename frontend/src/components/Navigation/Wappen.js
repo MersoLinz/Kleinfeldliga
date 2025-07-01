@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import ooe from "../assets/wappen/ooe.png";
-import ktn from "../assets/wappen/ktn.png";
-import w from "../assets/wappen/w.png";
-import vbg from "../assets/wappen/vbg.png";
-import t from "../assets/wappen/t.png";
-import bgld from "../assets/wappen/bgld.png";
-import noe from "../assets/wappen/noe.png";
-import sbg from "../assets/wappen/sbg.png";
-import stmk from "../assets/wappen/stmk.png";
-import { LigaContext } from "./LigaContext";
+import ooe from "../../assets/wappen/ooe.png";
+import ktn from "../../assets/wappen/ktn.png";
+import w from "../../assets/wappen/w.png";
+import vbg from "../../assets/wappen/vbg.png";
+import t from "../../assets/wappen/t.png";
+import bgld from "../../assets/wappen/bgld.png";
+import noe from "../../assets/wappen/noe.png";
+import sbg from "../../assets/wappen/sbg.png";
+import stmk from "../../assets/wappen/stmk.png";
+import { LigaContext } from "../Ligen/LigaContext";
 
 function Wappen({ onSelect }) {
 

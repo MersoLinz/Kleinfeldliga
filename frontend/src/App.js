@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import "./App.css";
-import RegisterPlayer from "./components/RegisterPlayer";
-import Tabelle from "./components/Tabelle";
-import Teams from "./components/Teams";
-import Wappen from "./components/Wappen";
-import News from "./components/News";
-import Spiele from "./components/Spiele";
-import Pagenotfound from "./components/Pagenotfound";
-import Rapper from "./components/Rapper";
-import Start from "./components/Start";
-import Footer from "./components/Footer";
-import Liga from "./components/Ligen";
-import Liganotfound from "./components/Liganotfound";
+import RegisterPlayer from "./components/Spieler/RegisterPlayer";
+import Tabelle from "./components/Wettbewerb/Tabelle";
+import Teams from "./components/Wettbewerb/Teams";
+import Wappen from "./components/Navigation/Wappen";
+import News from "./components/Infos/News";
+import Spiele from "./components/Wettbewerb/Spiele";
+import Pagenotfound from "./components/Navigation/Pagenotfound";
+import Rapper from "./components/Navigation/Rapper";
+import Start from "./components/Infos/Start";
+import Footer from "./components/Navigation/Footer";
+import Liga from "./components/Ligen/Ligen";
+import Liganotfound from "./components/Ligen/Liganotfound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Ligaordnung from "./components/Ligaordnung";
-import { LigaProvider } from "./components/LigaContext";
-import Spielregeln from "./components/Spielregeln";
+import Ligaordnung from "./components/Regeln/Ligaordnung";
+import { LigaProvider } from "./components/Ligen/LigaContext";
+import Spielregeln from "./components/Regeln/Spielregeln";
 
 function App() {
   const [selectedState, setSelectedState] = useState("OOE");

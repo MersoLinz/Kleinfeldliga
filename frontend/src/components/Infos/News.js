@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import NewsPost from "./Buttons/NewsPost";
+import NewsPost from "../Buttons/NewsPost";
 
 const News = () => {
   const [posts, setPosts] = useState([]);

@@ -17,7 +17,7 @@ const NeueSaisonButton = () => {
       variant="contained"
       color="secondary"
       onClick={handleNeueSaison}
-      style={{ marginLeft: 20 }}
+      style={{ marginLeft: 20, marginTop: 16 }}
     >
       Neue Saison starten
     </Button>

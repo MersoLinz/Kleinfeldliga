@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import RegisterButton from "./Buttons/RegisterButton";
+import RegisterButton from "../Buttons/RegisterButton";
 
 const RegisterPlayer = () => {
   const [player, setPlayer] = useState({

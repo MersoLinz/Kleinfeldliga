@@ -10,9 +10,9 @@ import {
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
-import s1 from "../assets/sponsoren/s1.PNG";
-import s2 from "../assets/sponsoren/s2.PNG";
-import s3 from "../assets/sponsoren/s3.PNG";
+import s1 from "../../assets/sponsoren/s1.PNG";
+import s2 from "../../assets/sponsoren/s2.PNG";
+import s3 from "../../assets/sponsoren/s3.PNG";
 
 const Footer = () => {
   return (
