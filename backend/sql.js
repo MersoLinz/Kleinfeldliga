@@ -24,6 +24,8 @@ export const sqlNeueSaisonMax = `SELECT MAX(saison) AS maxSaison FROM spiele`;
 
 export const sqlIdMannschaft = `SELECT id FROM mannschaften`;
 
+export const sqlInsertSpiele = `INSERT INTO spiele (saison, spieltag, heimmannschaft_id, gastmannschaft_id) VALUES (?, ?, ?, ?)`;
+
 export const sqlTabelle = `SELECT 
   m.id,
   m.name,

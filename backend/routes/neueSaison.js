@@ -1,5 +1,5 @@
 import express from "express";
-import { sqlNeueSaisonMax, sqlIdMannschaft } from "../sql.js";
+import { sqlNeueSaisonMax, sqlIdMannschaft, sqlInsertSpiele } from "../sql.js";
 import connection from "../db.js";
 
 const router = express.Router();
@@ -7,23 +7,23 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const jahr = await new Promise((resolve, reject) => {
-      connection.query(sqlNeueSaisonMax, (err, result) => {
+      connection.query(sqlNeueSaisonMax, (err, result) => {               // Abfrage des maximalen Jahres für die neue Saison
         if (err) return reject(err);
-        resolve((result[0].maxSaison || new Date().getFullYear()) + 1);
+        resolve((result[0].maxSaison || new Date().getFullYear()) + 1);   // Nächste Saison ist das aktuelle Jahr + 1
       });
     });
 
     const mannschaften = await new Promise((resolve, reject) => {
-      connection.query(sqlIdMannschaft, (err, result) => {
+      connection.query(sqlIdMannschaft, (err, result) => {                // Abfrage der IDs aller Mannschaften  
         if (err) return reject(err);
-        resolve(result.map((r) => r.id));
+        resolve(result.map((r) => r.id));                                 // Extrahieren der IDs aus dem Ergebnis, also 1, 2, ..., 10
       });
     });
 
     if (mannschaften.length !== 10) return res.status(400).json({ fehler: "Genau 10 Mannschaften benötigt" });
 
-    function generateRoundRobinSchedule(teams) {
-      const schedule = [];
+    function generateRoundRobinSchedule(teams) {                          // Beschreibung in generateSchedule.js
+      const spielplan = [];
       if (teams.length % 2 !== 0) teams.push(null);
       const totalRounds = teams.length - 1;
       const halfSize = teams.length / 2;
@@ -39,14 +39,14 @@ router.post("/", async (req, res) => {
           if (home && away) pairs.push([home, away]);
         }
         teamList.splice(1, 0, teamList.pop());
-        schedule.push(pairs);
+        spielplan.push(pairs);
       }
-      return schedule;
+      return spielplan;
     }
 
     const spielplan = [
-      ...generateRoundRobinSchedule(mannschaften),
-      ...generateRoundRobinSchedule(mannschaften).map(sp => sp.map(([a, b]) => [b, a]))
+      ...generateRoundRobinSchedule(mannschaften),                                        // Hinzufügen des Hinspiels
+      ...generateRoundRobinSchedule(mannschaften).map(sp => sp.map(([a, b]) => [b, a]))   // Rückspiel (Umkehrung der Paarungen)
     ];
 
     for (let i = 0; i < spielplan.length; i++) {
@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
       for (const [heim, gast] of spielplan[i]) {
         await new Promise((resolve, reject) => {
           connection.query(
-            "INSERT INTO spiele (saison, spieltag, heimmannschaft_id, gastmannschaft_id) VALUES (?, ?, ?, ?)",
+            sqlInsertSpiele,
             [jahr, spieltag, heim, gast],
             (err) => (err ? reject(err) : resolve())
           );
