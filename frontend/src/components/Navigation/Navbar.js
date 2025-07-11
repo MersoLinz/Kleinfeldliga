@@ -36,9 +36,9 @@ function Navbar(props) {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ backgroundColor: "grey" }}>
         <Toolbar disableGutters sx={{ position: "relative", width: "100%" }}>
-          <Box sx={{ display: "flex", alignItems: "center", mr: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mr: 2}}>
             <img src={logo} alt="Logo" style={{ height: 40 }} />
             <Typography
               variant="h6"
@@ -85,7 +85,7 @@ function Navbar(props) {
               open={Boolean(anchorElNav)}
               onClose={() => setAnchorElNav(null)}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", md: "none"},
               }}
             >
               {pages.map((page) => (

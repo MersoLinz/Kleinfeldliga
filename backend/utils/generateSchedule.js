@@ -1,3 +1,4 @@
+
 export function generateRoundRobinSchedule(teams) {
   const spielplan = [];                         
   const numTeams = teams.length;                

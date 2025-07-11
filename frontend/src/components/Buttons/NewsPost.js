@@ -61,7 +61,7 @@ const NewsPost = ({ onNewPost }) => {
         onChange={(e) => setText(e.target.value)}
         sx={{ mb: 2 }}
       />
-      <Button variant="outlined" component="label" fullWidth sx={{ mb: 2 }}>
+      <Button variant="outlined" component="label" fullWidth sx={{ mb: 2, backgroundColor: "lightgrey", color: "black" }}>
         Bild auswählen
         <input
           type="file"
@@ -78,7 +78,7 @@ const NewsPost = ({ onNewPost }) => {
           sx={{ mb: 2, maxHeight: 300, objectFit: "contain" }}
         />
       )}
-      <Button variant="contained" onClick={handlePost} fullWidth>
+      <Button variant="contained" onClick={handlePost} fullWidth sx={{ mb: 2, backgroundColor: "lightgrey", color: "black" }}>
         Posten
       </Button>
     </Card>
