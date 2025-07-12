@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 
 
-export default function Rapper() {
+export default function Wrapper() {
   return (
     <>
       <Navbar />

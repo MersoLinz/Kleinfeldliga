@@ -7,7 +7,7 @@ import Wappen from "./components/Navigation/Wappen";
 import News from "./components/Infos/News";
 import Spiele from "./components/Wettbewerb/Spiele";
 import Pagenotfound from "./components/Navigation/Pagenotfound";
-import Rapper from "./components/Navigation/Rapper";
+import Rapper from "./components/Navigation/Wrapper";
 import Start from "./components/Infos/Start";
 import Footer from "./components/Navigation/Footer";
 import Liga from "./components/Ligen/Ligen";
